@@ -61,6 +61,7 @@ export default {
             "q",
             await swapLastQuery(query.replace("!p", ""))
           );
+          redirectUrl.searchParams.set("copilot", "true");
         } else if (query.includes("!m")) {
           redirectUrl = new URL("https://metaphor.systems/search");
           redirectUrl.searchParams.set(
@@ -72,10 +73,7 @@ export default {
         }
       }
 
-      await env.QUERY_CACHE.put(
-        "last",
-        redirectUrl.searchParams.get("q") || ""
-      );
+      ctx.waitUntil(env.QUERY_CACHE.put("last", query || ""));
 
       return Response.redirect(redirectUrl.href, 302);
     }
