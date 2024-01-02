@@ -79,56 +79,6 @@ export default {
     }
 
     switch (url.pathname) {
-      // case "/meet": {
-      //   const id = url.searchParams.get("id");
-
-      //   if (id) {
-      //     const meetUrl = await env.MEET_URL.get(id);
-
-      //     if (meetUrl) {
-      //       return Response.redirect(meetUrl, 302);
-      //     } else {
-      //       return new Response("Not Found", { status: 404 });
-      //     }
-      //   } else {
-      //     const newId = Math.random().toString(36).substring(2, 7);
-
-      //     // Handle /meet path with redirection depth check
-      //     let response = await fetch("https://meet.google.com/new", {
-      //       redirect: "follow",
-      //       headers: {
-      //         "User-Agent":
-      //           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      //       },
-      //     });
-      //     let redirectCount = 0;
-      //     while (redirectCount < 5) {
-      //       const url = response.url;
-
-      //       console.log({ url });
-
-      //       const newUrl = new URL(url);
-
-      //       if (!newUrl.pathname.includes("unsupported")) {
-      //         break;
-      //       }
-
-      //       response = await fetch(url, {
-      //         redirect: "follow",
-      //       });
-      //       redirectCount++;
-      //     }
-      //     if (redirectCount >= 5) {
-      //       return new Response("Not Found", { status: 404 });
-      //     }
-
-      //     console.log(response.url);
-
-      //     //   await env.MEET_URL.put(newId, response.url);
-
-      //     return Response.redirect(response.url, 302);
-      //   }
-      // }
       default:
         // Default to search
         return handleSearch(request, env, ctx);
