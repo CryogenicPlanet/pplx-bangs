@@ -42,7 +42,9 @@ export default {
         if (query?.includes("!!")) {
           const lastQuery = await env.QUERY_CACHE.get("last");
           if (lastQuery) {
-            return lastQuery;
+            return `${lastQuery} ${query
+              .replace("!!", "")
+              .replace(/!g|!p|!m/g, "")}`;
           }
         }
         return query;
@@ -71,9 +73,11 @@ export default {
         } else {
           redirectUrl.searchParams.set("q", await swapLastQuery(query));
         }
-      }
 
-      ctx.waitUntil(env.QUERY_CACHE.put("last", query || ""));
+        ctx.waitUntil(
+          env.QUERY_CACHE.put("last", query.replace(/!g|!p|!m/g, ""))
+        );
+      }
 
       return Response.redirect(redirectUrl.href, 302);
     }
