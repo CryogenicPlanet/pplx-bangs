@@ -16,10 +16,10 @@ Feel free to change the default search engine, and the bangs to your liking.
 Fork, clone and cd into the repo.
 
 ```bash
-pnpm i
-npx wrangler kv:namespace create QUERY_CACHE # set this output in wrangler.toml
+bun i
+bunx wrangler kv:namespace create QUERY_CACHE # set this output in wrangler.toml
 
-npx wrangler publish
+bunx wrangler publish
 
 ```
 
