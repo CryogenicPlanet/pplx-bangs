@@ -64,11 +64,17 @@ export default {
             await swapLastQuery(query.replace("!p", ""))
           );
           redirectUrl.searchParams.set("copilot", "true");
-        } else if (query.includes("!m")) {
-          redirectUrl = new URL("https://metaphor.systems/search");
+        } else if (query.includes("!et")) {
+          redirectUrl = new URL("https://exa.ai/search?c=tweet");
           redirectUrl.searchParams.set(
             "q",
-            await swapLastQuery(query.replace("!m", ""))
+            await swapLastQuery(query.replace("!et", ""))
+          );
+        } else if (query.includes("!e")) {
+          redirectUrl = new URL("https://exa.ai/search");
+          redirectUrl.searchParams.set(
+            "q",
+            await swapLastQuery(query.replace("!e", ""))
           );
         } else {
           redirectUrl.searchParams.set("q", await swapLastQuery(query));
