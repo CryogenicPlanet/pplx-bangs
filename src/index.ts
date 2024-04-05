@@ -51,38 +51,41 @@ export default {
       };
 
       if (query) {
-        if (query.includes("!g")) {
+        if (query.toLowerCase().includes("!g")) {
           redirectUrl = new URL("https://www.google.com/search");
           redirectUrl.searchParams.set(
             "q",
-            await swapLastQuery(query.replace("!g", ""))
+            await swapLastQuery(query.replace(/!g/i, ""))
           );
-        } else if (query.includes("!p")) {
+        } else if (query.toLowerCase().includes("!p")) {
           redirectUrl = new URL("https://www.perplexity.ai/search");
           redirectUrl.searchParams.set(
             "q",
-            await swapLastQuery(query.replace("!p", ""))
+            await swapLastQuery(query.replace(/!p/i, ""))
           );
           redirectUrl.searchParams.set("copilot", "true");
-        } else if (query.includes("!et")) {
-          redirectUrl = new URL("https://exa.ai/search?c=tweet");
+        } else if (query.toLowerCase().includes("!et")) {
+          redirectUrl = new URL("https://exa.ai/search");
+          redirectUrl.searchParams.set("c", "tweet");
           redirectUrl.searchParams.set(
             "q",
-            await swapLastQuery(query.replace("!et", ""))
+            await swapLastQuery(query.replace(/!et/i, ""))
           );
-        } else if (query.includes("!e")) {
+        } else if (query.toLowerCase().includes("!e")) {
           redirectUrl = new URL("https://exa.ai/search");
           redirectUrl.searchParams.set(
             "q",
-            await swapLastQuery(query.replace("!e", ""))
+            await swapLastQuery(query.replace(/!e/i, ""))
           );
         } else {
           redirectUrl.searchParams.set("q", await swapLastQuery(query));
         }
 
-        ctx.waitUntil(
-          env.QUERY_CACHE.put("last", query.replace(/!g|!p|!m/g, ""))
-        );
+        if (!query.includes("!!")) {
+          ctx.waitUntil(
+            env.QUERY_CACHE.put("last", query.replace(/!g|!p|!m/g, ""))
+          );
+        }
       }
 
       return Response.redirect(redirectUrl.href, 302);
